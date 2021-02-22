@@ -12,6 +12,12 @@
   padding: 0 var(--space-small);
 }
 
+.logo img {
+  max-width: 180px;
+  width: 100%;
+  height: auto;
+}
+
 .menu {
   display: flex;
   list-style: none;
@@ -24,7 +30,7 @@
 }
 
 .menuItem a {
-  font-size: var(--size-large);
+  font-size: var(--size-medium);
   color: var(--color-text);
   text-decoration: none;
 }

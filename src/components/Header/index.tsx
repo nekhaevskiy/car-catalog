@@ -6,8 +6,8 @@ function Header() {
   return (
     <header className={styles.wrapper}>
       <div className={styles.inner}>
-        <a href="/">
-          <img src={logo} alt="Unnamed Company" width="314" height="64" />
+        <a href="/" className={styles.logo}>
+          <img src={logo} alt="Unnamed Company" />
         </a>
         <nav>
           <ul className={styles.menu}>
