@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { Button } from "../Button";
-import styles from "./Filters.module.css";
+import styles from "./Filter.module.css";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -22,15 +22,28 @@ const useStyles = makeStyles(() =>
   })
 );
 
+interface FilterState {
+  color: string;
+  manufacturer: string;
+}
+
+const initialFilter: FilterState = {
+  color: "all colors",
+  manufacturer: "all manufacturers"
+};
+
 interface Props {
+  onFilterChange: (filter: FilterState) => void;
   colors?: string[];
   manufacturers?: string[];
 }
 
-function Filters({ colors = [], manufacturers = [] }: Props) {
+function Filter({ colors = [], manufacturers = [], onFilterChange }: Props) {
   const classes = useStyles();
-  const [color, setColor] = React.useState("all colors");
-  const [manufacturer, setManufacturer] = React.useState("all manufacturers");
+  const [color, setColor] = React.useState(initialFilter.color);
+  const [manufacturer, setManufacturer] = React.useState(
+    initialFilter.manufacturer
+  );
 
   const changeColor = (event: React.ChangeEvent<{ value: unknown }>) => {
     setColor(event.target.value as string);
@@ -42,12 +55,17 @@ function Filters({ colors = [], manufacturers = [] }: Props) {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    const filter = {
+      color,
+      manufacturer
+    };
+    onFilterChange(filter);
   };
 
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
-        {/* TODO: Update select to match original design */}
+        {/* TODO: Update select to match the original design */}
         <FormControl
           variant="outlined"
           className={classes.formControl}
@@ -63,7 +81,7 @@ function Filters({ colors = [], manufacturers = [] }: Props) {
             className={classes.select}
             data-testid="select-color"
           >
-            <MenuItem value="all colors">
+            <MenuItem value={initialFilter.color}>
               <em>All car colors</em>
             </MenuItem>
             {colors.map((color) => (
@@ -89,7 +107,7 @@ function Filters({ colors = [], manufacturers = [] }: Props) {
             className={classes.select}
             data-testid="select-manufacturer"
           >
-            <MenuItem value="all manufacturers">
+            <MenuItem value={initialFilter.manufacturer}>
               <em>All manufacturers</em>
             </MenuItem>
             {manufacturers.map((manufacturer) => (
@@ -101,6 +119,7 @@ function Filters({ colors = [], manufacturers = [] }: Props) {
         </FormControl>
 
         <div className={styles.buttonWrapper}>
+          {/* TODO: Disable button while loading is in progress */}
           <Button>Filter</Button>
         </div>
       </form>
@@ -108,4 +127,5 @@ function Filters({ colors = [], manufacturers = [] }: Props) {
   );
 }
 
-export { Filters };
+export { Filter, initialFilter };
+export type { FilterState };
