@@ -27,5 +27,6 @@ function App() {
 // TODO: Add React Router
 // TODO: Add CSS Grid
 // TODO: Add Cypress
+// TODO: Check in different browsers
 
 export default App;

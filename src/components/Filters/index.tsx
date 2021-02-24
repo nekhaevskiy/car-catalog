@@ -7,6 +7,7 @@ import {
   Select
 } from "@material-ui/core";
 import React from "react";
+import { Button } from "../Button";
 import styles from "./Filters.module.css";
 
 const useStyles = makeStyles(() =>
@@ -28,8 +29,8 @@ interface Props {
 
 function Filters({ colors = [], manufacturers = [] }: Props) {
   const classes = useStyles();
-  const [color, setColor] = React.useState("all");
-  const [manufacturer, setManufacturer] = React.useState("all");
+  const [color, setColor] = React.useState("all colors");
+  const [manufacturer, setManufacturer] = React.useState("all manufacturers");
 
   const changeColor = (event: React.ChangeEvent<{ value: unknown }>) => {
     setColor(event.target.value as string);
@@ -62,7 +63,7 @@ function Filters({ colors = [], manufacturers = [] }: Props) {
             className={classes.select}
             data-testid="select-color"
           >
-            <MenuItem value="all">
+            <MenuItem value="all colors">
               <em>All car colors</em>
             </MenuItem>
             {colors.map((color) => (
@@ -88,7 +89,7 @@ function Filters({ colors = [], manufacturers = [] }: Props) {
             className={classes.select}
             data-testid="select-manufacturer"
           >
-            <MenuItem value="all">
+            <MenuItem value="all manufacturers">
               <em>All manufacturers</em>
             </MenuItem>
             {manufacturers.map((manufacturer) => (
@@ -99,7 +100,9 @@ function Filters({ colors = [], manufacturers = [] }: Props) {
           </Select>
         </FormControl>
 
-        <button>Filter</button>
+        <div className={styles.buttonWrapper}>
+          <Button>Filter</Button>
+        </div>
       </form>
     </>
   );
