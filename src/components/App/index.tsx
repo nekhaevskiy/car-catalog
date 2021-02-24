@@ -1,4 +1,5 @@
 import React from "react";
+import { Catalog } from "../Catalog";
 import { Filter, FilterState, initialFilter } from "../Filter";
 import { Footer } from "../Footer";
 import { Header } from "../Header";
@@ -20,7 +21,9 @@ function App() {
             onFilterChange={setFilterState}
           />
         </div>
-        <div className={styles.catalog}>Catalog</div>
+        <div className={styles.catalog}>
+          <Catalog />
+        </div>
       </main>
       <Footer />
     </>

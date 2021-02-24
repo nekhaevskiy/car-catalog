@@ -1,0 +1,10 @@
+.heading {
+  font-size: var(--size-large);
+  font-weight: bold;
+  margin: 0 0 var(--space-medium);
+}
+
+.status {
+  font-size: var(--size-medium);
+  margin: 0 0 var(--space-medium);
+}
