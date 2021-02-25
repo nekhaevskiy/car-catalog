@@ -5,6 +5,6 @@
 }
 
 .status {
-  font-size: var(--size-medium);
-  margin: 0 0 var(--space-medium);
+  font-size: var(--size-large);
+  margin: 0 0 var(--space-large);
 }

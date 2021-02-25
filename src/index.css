@@ -31,3 +31,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+a {
+  font-size: var(--size-small);
+  color: var(--color-brand);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+a:hover {
+  color: var(--color-secondary);
+  text-decoration: underline;
+}
+
+button {
+  display: inline-flex;
+  width: 128px;
+  min-height: 32px;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--size-medium);
+  color: #fff;
+  background-color: var(--color-brand);
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+button:focus,
+button:hover,
+button:active {
+  outline: 0;
+  background-color: var(--color-secondary);
+  cursor: pointer;
+}

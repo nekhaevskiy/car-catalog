@@ -7,7 +7,6 @@ import {
   Select
 } from "@material-ui/core";
 import React from "react";
-import { Button } from "../Button";
 import styles from "./Filter.module.css";
 
 const useStyles = makeStyles(() =>
@@ -120,7 +119,7 @@ function Filter({ colors = [], manufacturers = [], onFilterChange }: Props) {
 
         <div className={styles.buttonWrapper}>
           {/* TODO: Disable button while loading is in progress */}
-          <Button>Filter</Button>
+          <button>Filter</button>
         </div>
       </form>
     </>
