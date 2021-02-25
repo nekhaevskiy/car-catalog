@@ -1,0 +1,24 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid var(--color-gray);
+  padding: var(--space-small);
+}
+
+.image {
+  width: 100px;
+  height: auto;
+  margin-right: var(--space-large);
+  background-color: var(--color-gray);
+}
+
+.heading {
+  font-size: var(--size-large);
+  font-weight: bold;
+  margin: 0 0 var(--space-small);
+}
+
+.description {
+  font-size: var(--size-small);
+  margin: 0 0 var(--space-small);
+}
