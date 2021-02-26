@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  list-style: none;
+  width: 100%;
+  margin: var(--space-large) 0;
+  padding: 0;
+}
+
+.button,
+.text {
+  font-size: var(--size-small);
+  margin: 0 var(--space-medium);
+}
+
+.button {
+  color: var(--color-brand);
+  text-decoration: none;
+  transition: all 0.2s;
+  width: initial;
+  min-height: initial;
+  background-color: initial;
+  border-radius: initial;
+}
+
+.button:hover {
+  color: var(--color-secondary);
+  text-decoration: underline;
+}
+
+.button:focus,
+.button:hover,
+.button:active {
+  outline: initial;
+  background-color: initial;
+}

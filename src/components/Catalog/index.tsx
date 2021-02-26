@@ -2,6 +2,7 @@ import React from "react";
 import { carsUrl } from "../../api";
 import { Car, Card } from "../Card";
 import { Loading } from "../Loading";
+import { Pagination } from "../Pagination";
 import styles from "./Catalog.module.css";
 
 interface CatalogData {
@@ -44,6 +45,8 @@ function Catalog({ ...rest }) {
               <Card car={car} data-testid="Card" />
             </div>
           ))}
+
+          <Pagination current={1} total={10} onPageChange={() => {}} />
         </div>
       );
     case "rejected":
