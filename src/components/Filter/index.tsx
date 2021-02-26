@@ -37,7 +37,12 @@ interface Props {
   manufacturers?: string[];
 }
 
-function Filter({ colors = [], manufacturers = [], onFilterChange }: Props) {
+function Filter({
+  colors = [],
+  manufacturers = [],
+  onFilterChange,
+  ...rest
+}: Props) {
   const classes = useStyles();
   const [color, setColor] = React.useState(initialFilter.color);
   const [manufacturer, setManufacturer] = React.useState(
@@ -62,67 +67,64 @@ function Filter({ colors = [], manufacturers = [], onFilterChange }: Props) {
   };
 
   return (
-    <>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        {/* TODO: Update select to match the original design */}
-        <FormControl
-          variant="outlined"
-          className={classes.formControl}
-          disabled={colors.length === 0}
+    <form className={styles.form} onSubmit={handleSubmit} {...rest}>
+      <FormControl
+        variant="outlined"
+        className={classes.formControl}
+        disabled={colors.length === 0}
+      >
+        <InputLabel id="select-color-label">Color</InputLabel>
+        <Select
+          labelId="select-color-label"
+          id="select-color"
+          value={color}
+          onChange={changeColor}
+          label="Color"
+          className={classes.select}
+          data-testid="select-color"
         >
-          <InputLabel id="select-color-label">Color</InputLabel>
-          <Select
-            labelId="select-color-label"
-            id="select-color"
-            value={color}
-            onChange={changeColor}
-            label="Color"
-            className={classes.select}
-            data-testid="select-color"
-          >
-            <MenuItem value={initialFilter.color}>
-              <em>All car colors</em>
+          <MenuItem value={initialFilter.color}>
+            <em>All car colors</em>
+          </MenuItem>
+          {colors.map((color) => (
+            <MenuItem value={color} key={color}>
+              {color}
             </MenuItem>
-            {colors.map((color) => (
-              <MenuItem value={color} key={color}>
-                {color}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+          ))}
+        </Select>
+      </FormControl>
 
-        <FormControl
-          variant="outlined"
-          className={classes.formControl}
-          disabled={manufacturers.length === 0}
+      <FormControl
+        variant="outlined"
+        className={classes.formControl}
+        disabled={manufacturers.length === 0}
+      >
+        <InputLabel id="select-manufacturer-label">Manufacturer</InputLabel>
+        <Select
+          labelId="select-manufacturer-label"
+          id="select-manufacturer"
+          value={manufacturer}
+          onChange={changeManufacturer}
+          label="Manufacturer"
+          className={classes.select}
+          data-testid="select-manufacturer"
         >
-          <InputLabel id="select-manufacturer-label">Manufacturer</InputLabel>
-          <Select
-            labelId="select-manufacturer-label"
-            id="select-manufacturer"
-            value={manufacturer}
-            onChange={changeManufacturer}
-            label="Manufacturer"
-            className={classes.select}
-            data-testid="select-manufacturer"
-          >
-            <MenuItem value={initialFilter.manufacturer}>
-              <em>All manufacturers</em>
+          <MenuItem value={initialFilter.manufacturer}>
+            <em>All manufacturers</em>
+          </MenuItem>
+          {manufacturers.map((manufacturer) => (
+            <MenuItem value={manufacturer} key={manufacturer}>
+              {manufacturer}
             </MenuItem>
-            {manufacturers.map((manufacturer) => (
-              <MenuItem value={manufacturer} key={manufacturer}>
-                {manufacturer}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+          ))}
+        </Select>
+      </FormControl>
 
-        <div className={styles.buttonWrapper}>
-          {/* TODO: Disable button while loading is in progress */}
-          <button>Filter</button>
-        </div>
-      </form>
-    </>
+      <div className={styles.buttonWrapper}>
+        {/* TODO: Disable button while loading is in progress */}
+        <button>Filter</button>
+      </div>
+    </form>
   );
 }
 
