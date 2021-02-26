@@ -24,8 +24,6 @@ function Catalog({ ...rest }) {
         setState("resolved");
       })
       .catch((error) => {
-        // TODO: Show some error UI
-        console.error(error);
         setState("rejected");
       });
   }, []);
@@ -46,6 +44,15 @@ function Catalog({ ...rest }) {
               <Card car={car} data-testid="Card" />
             </div>
           ))}
+        </div>
+      );
+    case "rejected":
+      return (
+        <div role="alert" {...rest}>
+          <h1>
+            Something very bad has happened. Please reload the page to try
+            again.
+          </h1>
         </div>
       );
     default:

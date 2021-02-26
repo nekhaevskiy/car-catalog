@@ -1,5 +1,8 @@
 import { render, waitFor, within } from "@testing-library/react";
+import { rest } from "msw";
 import { Catalog } from ".";
+import { carsUrl } from "../../api";
+import { server } from "../../mocks/server";
 import { testDataCatalog } from "../../__testData__/Catalog";
 
 test("renders catalog", async () => {
@@ -25,4 +28,21 @@ test("renders catalog", async () => {
     within(firstCard).getByText(`Stock # ${cars[0].stockNumber}`)
   ).toBeVisible();
   expect(getAllByTestId("Card")).toHaveLength(10);
+});
+
+test("renders error message if network error is happened", async () => {
+  server.use(
+    rest.get(carsUrl, (req, res, ctx) => {
+      return res.networkError("Failed to connect");
+    })
+  );
+  const { getByLabelText, queryByLabelText, getByRole } = render(<Catalog />);
+
+  expect(getByLabelText(/loading/i)).toBeVisible();
+
+  await waitFor(() =>
+    expect(queryByLabelText(/loading/i)).not.toBeInTheDocument()
+  );
+
+  expect(getByRole("alert")).toBeVisible();
 });
