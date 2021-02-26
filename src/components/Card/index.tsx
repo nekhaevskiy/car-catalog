@@ -1,19 +1,55 @@
 import React from "react";
 import styles from "./Card.module.css";
 
-function Card() {
+interface Car {
+  stockNumber: number;
+  manufacturerName: string;
+  modelName: string;
+  mileage: {
+    number: number;
+    unit: string;
+  };
+  fuelType: string;
+  color: string;
+  pictureUrl: string;
+}
+
+interface Props {
+  car: Car;
+}
+
+function Card({
+  car: {
+    stockNumber,
+    manufacturerName,
+    modelName,
+    mileage,
+    fuelType,
+    color,
+    pictureUrl
+  }
+}: Props) {
+  const carName = `${manufacturerName} ${modelName}`;
   return (
-    <article className={styles.card}>
+    <article className={styles.card} data-testid="Card">
       <img
-        src="https://auto1-js-task-api--mufasa71.repl.co/images/car.svg"
-        alt="Chrysler Crossfire"
+        src={pictureUrl}
+        alt={carName}
         width="100"
         height="84"
         className={styles.image}
       />
       <div>
-        <h2 className={styles.heading}>Chrysler Crossfire</h2>
-        <p className={styles.description}>Stock # 61184</p>
+        <h2 className={styles.heading}>{carName}</h2>
+        <ul className={styles.description}>
+          <li>Stock # {stockNumber}</li>
+          <li className={styles.mileage}>
+            {mileage.number.toLocaleString("de-DE")} {mileage.unit}
+          </li>
+          <li>{fuelType}</li>
+          <li className={styles.color}>{color}</li>
+        </ul>
+        {/* TODO: Make the URL unique */}
         <a href="/car-61184">View details</a>
       </div>
     </article>
@@ -21,3 +57,4 @@ function Card() {
 }
 
 export { Card };
+export type { Car };
