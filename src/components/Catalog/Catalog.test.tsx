@@ -1,9 +1,14 @@
 import { render } from "@testing-library/react";
 import { Catalog } from ".";
+import { testDataCatalog } from "./Catalog.testData";
 
 test("renders catalog", () => {
-  const { getByText } = render(<Catalog />);
+  const { getByText, getAllByTestId } = render(
+    <Catalog data={testDataCatalog} />
+  );
+  const { totalCarsCount } = testDataCatalog;
 
   expect(getByText(/available cars/i)).toBeVisible();
-  expect(getByText(/showing 10 of 100 results/i)).toBeVisible();
+  expect(getByText(`Showing 10 of ${totalCarsCount} results`)).toBeVisible();
+  expect(getAllByTestId("Card")).toHaveLength(10);
 });

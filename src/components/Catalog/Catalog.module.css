@@ -8,3 +8,7 @@
   font-size: var(--size-large);
   margin: 0 0 var(--space-large);
 }
+
+.card {
+  margin-bottom: var(--space-medium);
+}
