@@ -3,7 +3,7 @@ import styles from "./Pagination.module.css";
 interface Props {
   current: number;
   total: number;
-  onPageChange: (page: number) => void;
+  onPageChange: (newPage: number) => void;
 }
 
 function Pagination({ current, total, onPageChange }: Props) {

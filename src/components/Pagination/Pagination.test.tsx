@@ -35,6 +35,7 @@ test("First and Previous buttons are not rendered if current page is the first o
 
   expect(queryByText(/first/i)).not.toBeInTheDocument();
   expect(queryByText(/previous/i)).not.toBeInTheDocument();
+  expect(getByText(/page 1 of 5/i)).toBeVisible();
   expect(getByText(/next/i)).toBeVisible();
   expect(getByText(/last/i)).toBeVisible();
 });
@@ -46,6 +47,7 @@ test("Next and Last buttons are not rendered if current page is the last one", (
 
   expect(getByText(/first/i)).toBeVisible();
   expect(getByText(/previous/i)).toBeVisible();
+  expect(getByText(/page 5 of 5/i)).toBeVisible();
   expect(queryByText(/next/i)).not.toBeInTheDocument();
   expect(queryByText(/last/i)).not.toBeInTheDocument();
 });

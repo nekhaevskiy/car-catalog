@@ -1,6 +1,6 @@
 import { CatalogData } from "../components/Catalog";
 
-const testDataCatalog: CatalogData = {
+const testDataCatalogPage1: CatalogData = {
   cars: [
     {
       stockNumber: 10105,
@@ -93,8 +93,24 @@ const testDataCatalog: CatalogData = {
       pictureUrl: "https://auto1-js-task-api--mufasa71.repl.co/images/car.svg"
     }
   ],
-  totalPageCount: 100,
-  totalCarsCount: 1000
+  totalPageCount: 2,
+  totalCarsCount: 11
 };
 
-export { testDataCatalog };
+const testDataCatalogPage2: CatalogData = {
+  cars: [
+    {
+      stockNumber: 10157,
+      manufacturerName: "Skoda",
+      modelName: "Forman",
+      color: "silver",
+      mileage: { number: 199115, unit: "km" },
+      fuelType: "Diesel",
+      pictureUrl: "https://auto1-js-task-api--mufasa71.repl.co/images/car.svg"
+    }
+  ],
+  totalPageCount: 2,
+  totalCarsCount: 11
+};
+
+export { testDataCatalogPage1, testDataCatalogPage2 };

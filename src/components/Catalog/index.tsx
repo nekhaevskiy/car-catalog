@@ -15,38 +15,54 @@ type State = "pending" | "resolved" | "rejected";
 
 function Catalog({ ...rest }) {
   const [state, setState] = React.useState<State>("pending");
+  const [page, setPage] = React.useState(1);
   const [data, setData] = React.useState<CatalogData>();
   React.useEffect(() => {
     window
-      .fetch(carsUrl)
+      .fetch(`${carsUrl}?page=${page}`)
       .then((response) => response.json())
       .then((data) => {
         setData(data);
         setState("resolved");
       })
-      .catch((error) => {
+      .catch(() => {
         setState("rejected");
       });
-  }, []);
+  }, [page]);
+
+  function onPageChange(newPage: number) {
+    setState("pending");
+    setPage(newPage);
+  }
 
   switch (state) {
     case "pending":
       return <Loading {...rest} />;
     case "resolved":
+      if (!data) {
+        throw new Error(
+          'data is undefined but state is "resolved" in the Catalog component'
+        );
+      }
+      const { totalCarsCount, cars, totalPageCount } = data;
       return (
         <div {...rest}>
           <h1 className={styles.heading}>Available cars</h1>
           <p className={styles.status}>
-            Showing 10 of {data?.totalCarsCount} results
+            Showing {cars.length} of {totalCarsCount} results
           </p>
 
-          {data?.cars.map((car) => (
+          {cars.map((car) => (
             <div className={styles.card} key={car.stockNumber}>
               <Card car={car} data-testid="Card" />
             </div>
           ))}
 
-          <Pagination current={1} total={10} onPageChange={() => {}} />
+          <Pagination
+            current={page}
+            total={totalPageCount}
+            onPageChange={onPageChange}
+          />
         </div>
       );
     case "rejected":
