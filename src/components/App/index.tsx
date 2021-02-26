@@ -10,10 +10,10 @@ function App() {
     <>
       <Header data-testid="Header" />
       <main className={styles.main}>
-        <div className={styles.filters}>
+        <div className={styles.left}>
           <Filter onFilterChange={() => {}} data-testid="Filter" />
         </div>
-        <div className={styles.catalog}>
+        <div className={styles.right}>
           <Catalog data-testid="Catalog" />
         </div>
       </main>
