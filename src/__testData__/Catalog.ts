@@ -1,4 +1,4 @@
-import { CatalogData } from ".";
+import { CatalogData } from "../components/Catalog";
 
 const testDataCatalog: CatalogData = {
   cars: [

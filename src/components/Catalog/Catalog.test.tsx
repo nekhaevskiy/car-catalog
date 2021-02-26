@@ -1,6 +1,6 @@
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, within } from "@testing-library/react";
 import { Catalog } from ".";
-import { testDataCatalog } from "./Catalog.testData";
+import { testDataCatalog } from "../../__testData__/Catalog";
 
 test("renders catalog", async () => {
   const {
@@ -9,7 +9,7 @@ test("renders catalog", async () => {
     getByText,
     getAllByTestId
   } = render(<Catalog />);
-  const { totalCarsCount } = testDataCatalog;
+  const { cars, totalCarsCount } = testDataCatalog;
 
   expect(getByLabelText(/loading/i)).toBeVisible();
 
@@ -19,5 +19,10 @@ test("renders catalog", async () => {
 
   expect(getByText(/available cars/i)).toBeVisible();
   expect(getByText(`Showing 10 of ${totalCarsCount} results`)).toBeVisible();
+
+  const firstCard = getAllByTestId("Card")[0];
+  expect(
+    within(firstCard).getByText(`Stock # ${cars[0].stockNumber}`)
+  ).toBeVisible();
   expect(getAllByTestId("Card")).toHaveLength(10);
 });
