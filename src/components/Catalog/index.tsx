@@ -1,5 +1,7 @@
 import React from "react";
+import { carsUrl } from "../../api";
 import { Car, Card } from "../Card";
+import { Loading } from "../Loading";
 import styles from "./Catalog.module.css";
 
 interface CatalogData {
@@ -8,23 +10,47 @@ interface CatalogData {
   totalCarsCount: number;
 }
 
-interface Props {
-  data: CatalogData;
-}
+type State = "pending" | "resolved" | "rejected";
 
-function Catalog({ data: { cars, totalCarsCount } }: Props) {
-  return (
-    <>
-      <h1 className={styles.heading}>Available cars</h1>
-      <p className={styles.status}>Showing 10 of {totalCarsCount} results</p>
+function Catalog({ ...rest }) {
+  const [state, setState] = React.useState<State>("pending");
+  const [data, setData] = React.useState<CatalogData>();
+  React.useEffect(() => {
+    window
+      .fetch(carsUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        setState("resolved");
+      })
+      .catch((error) => {
+        // TODO: Show some error UI
+        console.error(error);
+        setState("rejected");
+      });
+  }, []);
 
-      {cars.map((car) => (
-        <div className={styles.card} key={car.stockNumber}>
-          <Card car={car} />
+  switch (state) {
+    case "pending":
+      return <Loading {...rest} />;
+    case "resolved":
+      return (
+        <div {...rest}>
+          <h1 className={styles.heading}>Available cars</h1>
+          <p className={styles.status}>
+            Showing 10 of {data?.totalCarsCount} results
+          </p>
+
+          {data?.cars.map((car) => (
+            <div className={styles.card} key={car.stockNumber}>
+              <Card car={car} data-testid="Card" />
+            </div>
+          ))}
         </div>
-      ))}
-    </>
-  );
+      );
+    default:
+      throw new Error("Unhandled state in the Catalog component");
+  }
 }
 
 export { Catalog };

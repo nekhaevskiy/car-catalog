@@ -27,11 +27,12 @@ function Card({
     fuelType,
     color,
     pictureUrl
-  }
+  },
+  ...rest
 }: Props) {
   const carName = `${manufacturerName} ${modelName}`;
   return (
-    <article className={styles.card} data-testid="Card">
+    <article className={styles.card} {...rest}>
       <img
         src={pictureUrl}
         alt={carName}
