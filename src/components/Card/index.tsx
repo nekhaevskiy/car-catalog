@@ -1,5 +1,5 @@
 import React from "react";
-import { Car } from "../../typings";
+import { Car } from "../../api";
 import styles from "./Card.module.css";
 
 interface Props {

@@ -1,4 +1,4 @@
-import { Catalog } from "./typings";
+import { Catalog } from "./api";
 
 const testDataCatalogPage1: Catalog = {
   cars: [

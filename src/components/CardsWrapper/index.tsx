@@ -1,8 +1,10 @@
 import React from "react";
-import { Catalog, State } from "../../typings";
+import { Catalog } from "../../api";
 import { Card } from "../Card";
 import { LoadingCard } from "../LoadingCard";
 import styles from "./CardsWrapper.module.css";
+
+type State = "pending" | "resolved" | "rejected";
 
 interface Props {
   state: State;
@@ -61,3 +63,4 @@ function CardsWrapper({ state, catalog, ...rest }: Props) {
 }
 
 export { CardsWrapper };
+export type { State };

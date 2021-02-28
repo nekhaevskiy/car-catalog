@@ -1,7 +1,6 @@
 import React from "react";
-import { carsUrl } from "../../api";
-import { Catalog, State } from "../../typings";
-import { CardsWrapper } from "../CardsWrapper";
+import { carsUrl, Catalog } from "../../api";
+import { CardsWrapper, State } from "../CardsWrapper";
 import { Filter } from "../Filter";
 import { Footer } from "../Footer";
 import { Header } from "../Header";
@@ -21,6 +20,7 @@ function App() {
         setState("resolved");
       })
       .catch(() => {
+        setCatalog(undefined);
         setState("rejected");
       });
   }, [page]);
