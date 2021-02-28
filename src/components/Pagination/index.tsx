@@ -6,7 +6,7 @@ interface Props {
   onPageChange: (newPage: number) => void;
 }
 
-function Pagination({ current, total, onPageChange }: Props) {
+function Pagination({ current, total, onPageChange, ...rest }: Props) {
   const onFirstClick = () => onPageChange(1);
   const onPreviousClick = () => onPageChange(current - 1);
   const onNextClick = () => onPageChange(current + 1);
@@ -16,7 +16,7 @@ function Pagination({ current, total, onPageChange }: Props) {
   const showLast = current !== total;
 
   return (
-    <ul className={styles.container}>
+    <ul className={styles.container} {...rest}>
       {showFirst && (
         <li>
           <button

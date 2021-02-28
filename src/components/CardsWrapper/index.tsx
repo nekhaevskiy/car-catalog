@@ -1,47 +1,22 @@
 import React from "react";
-import { carsUrl } from "../../api";
-import { Car, Card } from "../Card";
+import { Catalog, State } from "../../typings";
+import { Card } from "../Card";
 import { LoadingCard } from "../LoadingCard";
-import { Pagination } from "../Pagination";
 import styles from "./CardsWrapper.module.css";
 
-interface CardsWrapperData {
-  cars: Car[];
-  totalPageCount: number;
-  totalCarsCount: number;
+interface Props {
+  state: State;
+  catalog?: Catalog;
 }
 
-type State = "pending" | "resolved" | "rejected";
-
-function Catalog({ ...rest }) {
-  const [state, setState] = React.useState<State>("pending");
-  const [page, setPage] = React.useState(1);
-  const [data, setData] = React.useState<CardsWrapperData>();
-  React.useEffect(() => {
-    window
-      .fetch(`${carsUrl}?page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        setState("resolved");
-      })
-      .catch(() => {
-        setState("rejected");
-      });
-  }, [page]);
-
-  function onPageChange(newPage: number) {
-    setState("pending");
-    setPage(newPage);
-  }
-
+function CardsWrapper({ state, catalog, ...rest }: Props) {
   switch (state) {
     case "pending":
       const loadingCars = new Array(10).fill(undefined);
       return (
         <div {...rest}>
           <h1 className={styles.heading}>Available cars</h1>
-          <p className={styles.status}>Loading</p>
+          <p className={styles.status}>Loading...</p>
 
           {loadingCars.map((car, index) => (
             <div className={styles.card} key={index}>
@@ -51,12 +26,12 @@ function Catalog({ ...rest }) {
         </div>
       );
     case "resolved":
-      if (!data) {
+      if (!catalog) {
         throw new Error(
-          'data is undefined but state is "resolved" in the Catalog component'
+          'catalog is undefined but state is "resolved" in the CardsWrapper component'
         );
       }
-      const { totalCarsCount, cars, totalPageCount } = data;
+      const { cars, totalCarsCount } = catalog;
       return (
         <div {...rest}>
           <h1 className={styles.heading}>Available cars</h1>
@@ -69,12 +44,6 @@ function Catalog({ ...rest }) {
               <Card car={car} data-testid="Card" />
             </div>
           ))}
-
-          <Pagination
-            current={page}
-            total={totalPageCount}
-            onPageChange={onPageChange}
-          />
         </div>
       );
     case "rejected":
@@ -91,5 +60,4 @@ function Catalog({ ...rest }) {
   }
 }
 
-export { Catalog };
-export type { CardsWrapperData };
+export { CardsWrapper };

@@ -1,18 +1,6 @@
 import React from "react";
+import { Car } from "../../typings";
 import styles from "./Card.module.css";
-
-interface Car {
-  stockNumber: number;
-  manufacturerName: string;
-  modelName: string;
-  mileage: {
-    number: number;
-    unit: string;
-  };
-  fuelType: string;
-  color: string;
-  pictureUrl: string;
-}
 
 interface Props {
   car: Car;
@@ -58,4 +46,3 @@ function Card({
 }
 
 export { Card };
-export type { Car };

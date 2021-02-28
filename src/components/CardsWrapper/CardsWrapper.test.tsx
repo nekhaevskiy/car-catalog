@@ -1,50 +1,41 @@
 import { render, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { rest } from "msw";
-import { Catalog } from ".";
-import { carsUrl } from "../../api";
-import { server } from "../../mocks/server";
+import { CardsWrapper } from ".";
 import { testDataCatalogPage1, testDataCatalogPage2 } from "../../testData";
 
-test("renders the first page of the catalog", async () => {
-  const { getByText, queryByText, getAllByTestId } = render(<Catalog />);
-  const { cars, totalCarsCount, totalPageCount } = testDataCatalogPage1;
+test('renders "pending" state', () => {
+  const { getByText, getAllByTestId } = render(
+    <CardsWrapper state="pending" />
+  );
 
+  expect(getByText(/available cars/i)).toBeVisible();
   expect(getByText(/loading/i)).toBeVisible();
   expect(getAllByTestId("LoadingCard")).toHaveLength(10);
+});
 
-  await waitFor(() => expect(queryByText(/loading/i)).not.toBeInTheDocument());
+test('renders "resolved" state', () => {
+  const { cars, totalCarsCount } = testDataCatalogPage1;
+  const { getByText, getAllByTestId } = render(
+    <CardsWrapper state="resolved" catalog={testDataCatalogPage1} />
+  );
 
   expect(getByText(/available cars/i)).toBeVisible();
   expect(
     getByText(`Showing ${cars.length} of ${totalCarsCount} results`)
   ).toBeVisible();
-
-  const firstCard = getAllByTestId("Card")[0];
-  expect(
-    within(firstCard).getByText(`Stock # ${cars[0].stockNumber}`)
-  ).toBeVisible();
   expect(getAllByTestId("Card")).toHaveLength(10);
-  expect(getByText(`Page 1 of ${totalPageCount}`)).toBeVisible();
 });
 
-test("renders error message if network error is happened", async () => {
-  server.use(
-    rest.get(carsUrl, (req, res, ctx) => {
-      return res.networkError("Failed to connect");
-    })
-  );
-  const { getByText, queryByText, getByRole } = render(<Catalog />);
-
-  expect(getByText(/loading/i)).toBeVisible();
-
-  await waitFor(() => expect(queryByText(/loading/i)).not.toBeInTheDocument());
+test('renders "rejected" state', () => {
+  const { getByRole } = render(<CardsWrapper state="rejected" />);
 
   expect(getByRole("alert")).toBeVisible();
 });
 
-test("renders the second page if Next button is clicked", async () => {
-  const { getByText, queryByText, getAllByTestId } = render(<Catalog />);
+test.skip("renders the second page if Next button is clicked", async () => {
+  const { getByText, queryByText, getAllByTestId } = render(
+    <CardsWrapper state="pending" />
+  );
 
   await waitFor(() => expect(queryByText(/loading/i)).not.toBeInTheDocument());
 
