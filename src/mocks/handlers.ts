@@ -1,12 +1,21 @@
 import { rest } from "msw";
 import { apiUrl } from "../api";
-import { testDataCarsPage1, testDataCarsPage2 } from "../api/__testData__/cars";
+import {
+  testDataAudiRed,
+  testDataCarsPage1,
+  testDataCarsPage2
+} from "../api/__testData__/cars";
 import { testDataColors } from "../api/__testData__/colors";
 import { testDataManufacturers } from "../api/__testData__/manufacturers";
 
 export const handlers = [
   rest.get(apiUrl.cars, (req, res, ctx) => {
     const page = req.url.searchParams.get("page");
+    const color = req.url.searchParams.get("color");
+    const manufacturer = req.url.searchParams.get("manufacturer");
+    if (page === "1" && color === "red" && manufacturer === "Audi") {
+      return res(ctx.status(200), ctx.json(testDataAudiRed));
+    }
     if (page === "2") {
       return res(ctx.status(200), ctx.json(testDataCarsPage2));
     }

@@ -13,7 +13,13 @@ function App() {
   const [page, setPage] = React.useState(1);
   const [catalog, setCatalog] = React.useState<Catalog>();
   React.useEffect(() => {
-    api<Catalog>(`${apiUrl.cars}?page=${page}`)
+    const colorParam =
+      filter.color !== initialFilter.color ? `&color=${filter.color}` : "";
+    const manufacturerParam =
+      filter.manufacturer !== initialFilter.manufacturer
+        ? `&manufacturer=${filter.manufacturer}`
+        : "";
+    api<Catalog>(`${apiUrl.cars}?page=${page}${colorParam}${manufacturerParam}`)
       .then((catalog) => {
         setCatalog(catalog);
         setState("resolved");
@@ -23,7 +29,13 @@ function App() {
         // TODO: log error without console
         // console.error(error);
       });
-  }, [page]);
+  }, [filter.color, filter.manufacturer, page]);
+
+  function onFilterChange(filter: FilterState) {
+    setState("pending");
+    setPage(1);
+    setFilter(filter);
+  }
 
   function onPageChange(newPage: number) {
     setState("pending");
@@ -37,7 +49,8 @@ function App() {
         <div className={styles.left}>
           <Filter
             filter={filter}
-            onFilterChange={setFilter}
+            onFilterChange={onFilterChange}
+            disabled={state !== "resolved"}
             data-testid="Filter"
           />
         </div>

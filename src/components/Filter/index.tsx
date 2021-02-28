@@ -35,9 +35,10 @@ const initialFilter: FilterState = {
 interface Props {
   filter: FilterState;
   onFilterChange: (filter: FilterState) => void;
+  disabled: boolean;
 }
 
-function Filter({ filter, onFilterChange, ...rest }: Props) {
+function Filter({ filter, onFilterChange, disabled, ...rest }: Props) {
   const classes = useStyles();
   const [colors, setColors] = React.useState<string[]>([]);
   const [manufacturers, setManufacturers] = React.useState<string[]>([]);
@@ -79,11 +80,13 @@ function Filter({ filter, onFilterChange, ...rest }: Props) {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const filter = {
-      color,
-      manufacturer
-    };
-    onFilterChange(filter);
+    if (color !== filter.color || manufacturer !== filter.manufacturer) {
+      const filter = {
+        color,
+        manufacturer
+      };
+      onFilterChange(filter);
+    }
   };
 
   return (
@@ -141,8 +144,7 @@ function Filter({ filter, onFilterChange, ...rest }: Props) {
       </FormControl>
 
       <div className={styles.buttonWrapper}>
-        {/* TODO: Disable button while loading is in progress */}
-        <button>Filter</button>
+        <button disabled={disabled}>Filter</button>
       </div>
     </form>
   );

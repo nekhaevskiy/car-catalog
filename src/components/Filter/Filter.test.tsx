@@ -11,9 +11,13 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-test("renders initial state", async () => {
+test("renders initial state with disabled button", async () => {
   const { getByTestId, getByText, getAllByText } = render(
-    <Filter filter={initialFilter} onFilterChange={onFilterChange} />
+    <Filter
+      filter={initialFilter}
+      onFilterChange={onFilterChange}
+      disabled={true}
+    />
   );
 
   expect(getAllByText(/color/i)[0]).toBeVisible();
@@ -32,19 +36,59 @@ test("renders initial state", async () => {
     "true"
   );
 
+  expect(getByText(/filter/i)).toBeDisabled();
+});
+
+test("renders initial state with enabled button", async () => {
+  const { getByTestId, getByText, getAllByText } = render(
+    <Filter
+      filter={initialFilter}
+      onFilterChange={onFilterChange}
+      disabled={false}
+    />
+  );
+
+  expect(getAllByText(/color/i)[0]).toBeVisible();
+  expect(getByText(/all car colors/i)).toBeVisible();
+  const colorWrapper = getByTestId("select-color");
+  expect(within(colorWrapper).getByRole("button")).toHaveAttribute(
+    "aria-disabled",
+    "true"
+  );
+
+  expect(getAllByText(/manufacturer/i)[0]).toBeVisible();
+  expect(getByText(/all manufacturers/i)).toBeVisible();
+  const manufacturerWrapper = getByTestId("select-manufacturer");
+  expect(within(manufacturerWrapper).getByRole("button")).toHaveAttribute(
+    "aria-disabled",
+    "true"
+  );
+
+  expect(getByText(/filter/i)).not.toBeDisabled();
+});
+
+test("onFilterChange is not called if filter is not changed", async () => {
+  const { getByText } = render(
+    <Filter
+      filter={initialFilter}
+      onFilterChange={onFilterChange}
+      disabled={false}
+    />
+  );
+
   userEvent.click(getByText(/filter/i));
 
-  expect(onFilterChange).toHaveBeenCalledWith({
-    color: initialFilter.color,
-    manufacturer: initialFilter.manufacturer
-  });
-  expect(onFilterChange).toHaveBeenCalledTimes(1);
+  expect(onFilterChange).not.toHaveBeenCalled();
 });
 
 test("color can be changed", async () => {
   const { colors } = testDataColors;
   const { getByTestId, getByText, queryByText } = render(
-    <Filter filter={initialFilter} onFilterChange={onFilterChange} />
+    <Filter
+      filter={initialFilter}
+      onFilterChange={onFilterChange}
+      disabled={false}
+    />
   );
 
   const colorWrapper = getByTestId("select-color");
@@ -82,7 +126,11 @@ test("manufacturer can be changed", async () => {
     (manufacturer) => manufacturer.name
   );
   const { getByTestId, getByText, queryByText } = render(
-    <Filter filter={initialFilter} onFilterChange={onFilterChange} />
+    <Filter
+      filter={initialFilter}
+      onFilterChange={onFilterChange}
+      disabled={false}
+    />
   );
 
   const manufacturerWrapper = getByTestId("select-manufacturer");

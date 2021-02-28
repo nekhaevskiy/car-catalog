@@ -113,4 +113,29 @@ const testDataCarsPage2: Catalog = {
   totalCarsCount: 11
 };
 
-export { testDataCarsPage1, testDataCarsPage2 };
+const testDataAudiRed: Catalog = {
+  cars: [
+    {
+      stockNumber: 64728,
+      manufacturerName: "Audi",
+      modelName: "RS 3",
+      color: "red",
+      mileage: { number: 118959, unit: "km" },
+      fuelType: "Petrol",
+      pictureUrl: "https://auto1-js-task-api--mufasa71.repl.co/images/car.svg"
+    },
+    {
+      stockNumber: 72053,
+      manufacturerName: "Audi",
+      modelName: "A4",
+      color: "red",
+      mileage: { number: 171873, unit: "km" },
+      fuelType: "Petrol",
+      pictureUrl: "https://auto1-js-task-api--mufasa71.repl.co/images/car.svg"
+    }
+  ],
+  totalPageCount: 1,
+  totalCarsCount: 2
+};
+
+export { testDataCarsPage1, testDataCarsPage2, testDataAudiRed };
