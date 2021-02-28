@@ -1,7 +1,6 @@
-.main {
+.container {
   display: flex;
   max-width: 1024px;
-  min-height: calc(100vh - 80px - 1px - 80px - 1px);
   margin: 0 auto;
   padding: var(--space-large) var(--space-small) 0 var(--space-small);
 }

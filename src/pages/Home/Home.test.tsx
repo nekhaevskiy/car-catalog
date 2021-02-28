@@ -2,7 +2,7 @@ import { render, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import React from "react";
-import App from ".";
+import { Home } from ".";
 import { apiUrl } from "../../api";
 import {
   testDataAudiRed,
@@ -15,13 +15,8 @@ import { server } from "../../mocks/server";
 
 test("renders the first page of the catalog in the happy case", async () => {
   const { cars, totalCarsCount, totalPageCount } = testDataCarsPage1;
-  const { getByTestId, getByText, queryByText, getAllByTestId } = render(
-    <App />
-  );
+  const { getByText, queryByText, getAllByTestId } = render(<Home />);
 
-  expect(getByTestId("Header")).toBeVisible();
-  expect(getByTestId("Filter")).toBeVisible();
-  expect(getByTestId("Footer")).toBeVisible();
   expect(getByText(/loading.../i)).toBeVisible();
   expect(getByText(/filter/i)).toBeDisabled();
 
@@ -88,11 +83,9 @@ test("renders the error alert in an error case", async () => {
       return res.networkError("Failed to connect");
     })
   );
-  const { getByTestId, getByText, queryByText, getByRole } = render(<App />);
+  const { getByTestId, getByText, queryByText, getByRole } = render(<Home />);
 
-  expect(getByTestId("Header")).toBeVisible();
   expect(getByTestId("Filter")).toBeVisible();
-  expect(getByTestId("Footer")).toBeVisible();
   expect(getByText(/loading.../i)).toBeVisible();
 
   await waitFor(() =>
@@ -104,7 +97,7 @@ test("renders the error alert in an error case", async () => {
 
 test("renders the second page of the catalog if the Next button is clicked", async () => {
   const { cars, totalCarsCount, totalPageCount } = testDataCarsPage2;
-  const { getByText, queryByText, getAllByTestId } = render(<App />);
+  const { getByText, queryByText, getAllByTestId } = render(<Home />);
 
   await waitFor(() => expect(getByText("Next")).toBeVisible());
 
@@ -163,7 +156,7 @@ test("all cars with the first color and the first manufacturer can be rendered f
   const manufacturers = testDataManufacturers.manufacturers.map(
     (manufacturer) => manufacturer.name
   );
-  const { getByText, queryByText, getByTestId } = render(<App />);
+  const { getByText, queryByText, getByTestId } = render(<Home />);
 
   await waitFor(() => expect(getByText("Next")).toBeVisible());
 

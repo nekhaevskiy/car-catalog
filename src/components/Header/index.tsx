@@ -1,14 +1,15 @@
 import React from "react";
-import logo from "./logo.png";
+import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
+import logo from "./logo.png";
 
 function Header({ ...rest }) {
   return (
     <header className={styles.wrapper} {...rest}>
       <div className={styles.inner}>
-        <a href="/" className={styles.logo}>
+        <Link to="/" className={styles.logo}>
           <img src={logo} alt="Unnamed Company" width="100" height="37" />
-        </a>
+        </Link>
         <nav>
           <ul className={styles.menu}>
             <li className={styles.menuItem}>

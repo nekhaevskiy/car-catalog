@@ -1,13 +1,11 @@
 import React from "react";
 import { api, apiUrl, Catalog } from "../../api";
-import { CardsWrapper, State } from "../CardsWrapper";
-import { Filter, FilterState, initialFilter } from "../Filter";
-import { Footer } from "../Footer";
-import { Header } from "../Header";
-import { Pagination } from "../Pagination";
-import styles from "./App.module.css";
+import { CardsWrapper, State } from "../../components/CardsWrapper";
+import { Filter, FilterState, initialFilter } from "../../components/Filter";
+import { Pagination } from "../../components/Pagination";
+import styles from "./Home.module.css";
 
-function App() {
+function Home() {
   const [state, setState] = React.useState<State>("pending");
   const [filter, setFilter] = React.useState<FilterState>(initialFilter);
   const [page, setPage] = React.useState(1);
@@ -44,8 +42,7 @@ function App() {
 
   return (
     <>
-      <Header data-testid="Header" />
-      <main className={styles.main}>
+      <div className={styles.container}>
         <div className={styles.left}>
           <Filter
             filter={filter}
@@ -55,7 +52,11 @@ function App() {
           />
         </div>
         <div className={styles.right}>
-          <CardsWrapper state={state} catalog={catalog} />
+          <CardsWrapper
+            state={state}
+            catalog={catalog}
+            data-testid="CardsWrapper"
+          />
           {state === "resolved" && catalog && (
             <Pagination
               current={page}
@@ -64,16 +65,9 @@ function App() {
             />
           )}
         </div>
-      </main>
-      <Footer data-testid="Footer" />
+      </div>
     </>
   );
 }
 
-// TODO: Add React Router
-// TODO: Add 404 page
-// TODO: Add mobile version
-// TODO: Add ErrorBoundary
-// TODO: Check in different browsers
-
-export default App;
+export { Home };
