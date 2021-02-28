@@ -1,6 +1,6 @@
-import { Catalog } from "./api";
+import { Catalog } from "..";
 
-const testDataCatalogPage1: Catalog = {
+const testDataCarsPage1: Catalog = {
   cars: [
     {
       stockNumber: 10105,
@@ -97,7 +97,7 @@ const testDataCatalogPage1: Catalog = {
   totalCarsCount: 11
 };
 
-const testDataCatalogPage2: Catalog = {
+const testDataCarsPage2: Catalog = {
   cars: [
     {
       stockNumber: 10157,
@@ -113,4 +113,4 @@ const testDataCatalogPage2: Catalog = {
   totalCarsCount: 11
 };
 
-export { testDataCatalogPage1, testDataCatalogPage2 };
+export { testDataCarsPage1, testDataCarsPage2 };

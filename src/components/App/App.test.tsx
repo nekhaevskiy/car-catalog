@@ -3,12 +3,15 @@ import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import React from "react";
 import App from ".";
-import { carsUrl } from "../../api";
+import { apiUrl } from "../../api";
+import {
+  testDataCarsPage1,
+  testDataCarsPage2
+} from "../../api/__testData__/cars";
 import { server } from "../../mocks/server";
-import { testDataCatalogPage1, testDataCatalogPage2 } from "../../testData";
 
 test("renders the first page of the catalog in the happy case", async () => {
-  const { cars, totalCarsCount, totalPageCount } = testDataCatalogPage1;
+  const { cars, totalCarsCount, totalPageCount } = testDataCarsPage1;
   const { getByTestId, getByText, queryByText, getAllByTestId } = render(
     <App />
   );
@@ -66,7 +69,17 @@ test("renders the first page of the catalog in the happy case", async () => {
 
 test("renders the error alert in an error case", async () => {
   server.use(
-    rest.get(carsUrl, (req, res, ctx) => {
+    rest.get(apiUrl.cars, (req, res, ctx) => {
+      return res.networkError("Failed to connect");
+    })
+  );
+  server.use(
+    rest.get(apiUrl.colors, (req, res, ctx) => {
+      return res.networkError("Failed to connect");
+    })
+  );
+  server.use(
+    rest.get(apiUrl.manufacturers, (req, res, ctx) => {
       return res.networkError("Failed to connect");
     })
   );
@@ -85,7 +98,7 @@ test("renders the error alert in an error case", async () => {
 });
 
 test("renders the second page of the catalog if the Next button is clicked", async () => {
-  const { cars, totalCarsCount, totalPageCount } = testDataCatalogPage2;
+  const { cars, totalCarsCount, totalPageCount } = testDataCarsPage2;
   const { getByText, queryByText, getAllByTestId } = render(<App />);
 
   await waitFor(() => expect(getByText("Next")).toBeVisible());

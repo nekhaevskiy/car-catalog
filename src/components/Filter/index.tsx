@@ -7,6 +7,7 @@ import {
   Select
 } from "@material-ui/core";
 import React from "react";
+import { api, apiUrl, Colors, Manufacturers } from "../../api";
 import styles from "./Filter.module.css";
 
 const useStyles = makeStyles(() =>
@@ -32,22 +33,41 @@ const initialFilter: FilterState = {
 };
 
 interface Props {
+  filter: FilterState;
   onFilterChange: (filter: FilterState) => void;
-  colors?: string[];
-  manufacturers?: string[];
 }
 
-function Filter({
-  colors = [],
-  manufacturers = [],
-  onFilterChange,
-  ...rest
-}: Props) {
+function Filter({ filter, onFilterChange, ...rest }: Props) {
   const classes = useStyles();
-  const [color, setColor] = React.useState(initialFilter.color);
+  const [colors, setColors] = React.useState<string[]>([]);
+  const [manufacturers, setManufacturers] = React.useState<string[]>([]);
+  const [color, setColor] = React.useState(() => filter.color);
   const [manufacturer, setManufacturer] = React.useState(
-    initialFilter.manufacturer
+    () => filter.manufacturer
   );
+  React.useEffect(() => {
+    api<Colors>(apiUrl.colors)
+      .then((data) => {
+        setColors(data.colors);
+      })
+      .catch((error) => {
+        // TODO: log error without console
+        // console.error(error);
+      });
+  }, []);
+  React.useEffect(() => {
+    api<Manufacturers>(apiUrl.manufacturers)
+      .then((data) => {
+        const manufacturerNames = data.manufacturers.map(
+          (manufacturer) => manufacturer.name
+        );
+        setManufacturers(manufacturerNames);
+      })
+      .catch((error) => {
+        // TODO: log error without console
+        // console.error(error);
+      });
+  }, []);
 
   const changeColor = (event: React.ChangeEvent<{ value: unknown }>) => {
     setColor(event.target.value as string);

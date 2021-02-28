@@ -1,7 +1,9 @@
 import { render, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
 import { Filter, initialFilter } from ".";
-import userEvent from "@testing-library/user-event";
+import { testDataColors } from "../../api/__testData__/colors";
+import { testDataManufacturers } from "../../api/__testData__/manufacturers";
 
 const onFilterChange = jest.fn();
 
@@ -9,14 +11,13 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-test("selects are disabled if no colors and no manufacturers are passed", () => {
+test("renders initial state", async () => {
   const { getByTestId, getByText, getAllByText } = render(
-    <Filter onFilterChange={onFilterChange} />
+    <Filter filter={initialFilter} onFilterChange={onFilterChange} />
   );
 
   expect(getAllByText(/color/i)[0]).toBeVisible();
   expect(getByText(/all car colors/i)).toBeVisible();
-
   const colorWrapper = getByTestId("select-color");
   expect(within(colorWrapper).getByRole("button")).toHaveAttribute(
     "aria-disabled",
@@ -25,7 +26,6 @@ test("selects are disabled if no colors and no manufacturers are passed", () => 
 
   expect(getAllByText(/manufacturer/i)[0]).toBeVisible();
   expect(getByText(/all manufacturers/i)).toBeVisible();
-
   const manufacturerWrapper = getByTestId("select-manufacturer");
   expect(within(manufacturerWrapper).getByRole("button")).toHaveAttribute(
     "aria-disabled",
@@ -42,55 +42,75 @@ test("selects are disabled if no colors and no manufacturers are passed", () => 
 });
 
 test("color can be changed", async () => {
-  const testColors = ["blue", "black", "white"];
-  const { getByText, queryByText } = render(
-    <Filter onFilterChange={onFilterChange} colors={testColors} />
+  const { colors } = testDataColors;
+  const { getByTestId, getByText, queryByText } = render(
+    <Filter filter={initialFilter} onFilterChange={onFilterChange} />
   );
 
-  expect(queryByText(/black/i)).not.toBeInTheDocument();
-  expect(queryByText(/white/i)).not.toBeInTheDocument();
+  const colorWrapper = getByTestId("select-color");
+
+  await waitFor(() =>
+    expect(within(colorWrapper).getByRole("button")).not.toHaveAttribute(
+      "aria-disabled"
+    )
+  );
 
   userEvent.click(getByText(/all car colors/i));
-  userEvent.click(getByText(/black/i));
+
+  colors.forEach((color) => {
+    expect(getByText(color)).toBeVisible();
+  });
+
+  userEvent.click(getByText(colors[0]));
 
   await waitFor(() =>
     expect(queryByText(/all car colors/i)).not.toBeInTheDocument()
   );
-  expect(getByText(/black/i)).toBeVisible();
-  expect(queryByText(/white/i)).not.toBeInTheDocument();
+  expect(getByText(colors[0])).toBeVisible();
 
   userEvent.click(getByText(/filter/i));
 
   expect(onFilterChange).toHaveBeenCalledWith({
-    color: "black",
+    color: colors[0],
     manufacturer: initialFilter.manufacturer
   });
   expect(onFilterChange).toHaveBeenCalledTimes(1);
 });
 
 test("manufacturer can be changed", async () => {
-  const testManufacturers = ["bmw", "mercedes", "chrysler"];
-  const { getByText, queryByText } = render(
-    <Filter onFilterChange={onFilterChange} manufacturers={testManufacturers} />
+  const manufacturers = testDataManufacturers.manufacturers.map(
+    (manufacturer) => manufacturer.name
+  );
+  const { getByTestId, getByText, queryByText } = render(
+    <Filter filter={initialFilter} onFilterChange={onFilterChange} />
   );
 
-  expect(queryByText(/bmw/i)).not.toBeInTheDocument();
-  expect(queryByText(/mercedes/i)).not.toBeInTheDocument();
+  const manufacturerWrapper = getByTestId("select-manufacturer");
+
+  await waitFor(() =>
+    expect(within(manufacturerWrapper).getByRole("button")).not.toHaveAttribute(
+      "aria-disabled"
+    )
+  );
 
   userEvent.click(getByText(/all manufacturers/i));
-  userEvent.click(getByText(/bmw/i));
+
+  manufacturers.forEach((manufacturer) => {
+    expect(getByText(manufacturer)).toBeVisible();
+  });
+
+  userEvent.click(getByText(manufacturers[0]));
 
   await waitFor(() =>
     expect(queryByText(/all manufacturers/i)).not.toBeInTheDocument()
   );
-  expect(getByText(/bmw/i)).toBeVisible();
-  expect(queryByText(/mercedes/i)).not.toBeInTheDocument();
+  expect(getByText(manufacturers[0])).toBeVisible();
 
   userEvent.click(getByText(/filter/i));
 
   expect(onFilterChange).toHaveBeenCalledWith({
     color: initialFilter.color,
-    manufacturer: "bmw"
+    manufacturer: manufacturers[0]
   });
   expect(onFilterChange).toHaveBeenCalledTimes(1);
 });
