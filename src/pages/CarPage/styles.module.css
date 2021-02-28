@@ -1,0 +1,11 @@
+.loadingContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-medium);
+}
+
+.heading {
+  font-size: var(--size-x-large);
+  font-weight: bold;
+  margin: 0 0 var(--space-large);
+}
