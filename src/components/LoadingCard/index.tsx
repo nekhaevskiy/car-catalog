@@ -1,8 +1,8 @@
-import styles from "./Loading.module.css";
+import styles from "./LoadingCard.module.css";
 
-function Loading({ ...rest }) {
+function LoadingCard({ ...rest }) {
   return (
-    <div className={styles.loading} aria-label="loading" {...rest}>
+    <div className={styles.loading} {...rest}>
       <div className={styles.left} />
       <div className={styles.right}>
         <div className={styles.first} />
@@ -13,4 +13,4 @@ function Loading({ ...rest }) {
   );
 }
 
-export { Loading };
+export { LoadingCard };

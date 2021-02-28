@@ -10,19 +10,13 @@ import {
 } from "../../__testData__/Catalog";
 
 test("renders the first page of the catalog", async () => {
-  const {
-    getByLabelText,
-    queryByLabelText,
-    getByText,
-    getAllByTestId
-  } = render(<Catalog />);
+  const { getByText, queryByText, getAllByTestId } = render(<Catalog />);
   const { cars, totalCarsCount, totalPageCount } = testDataCatalogPage1;
 
-  expect(getByLabelText(/loading/i)).toBeVisible();
+  expect(getByText(/loading/i)).toBeVisible();
+  expect(getAllByTestId("LoadingCard")).toHaveLength(10);
 
-  await waitFor(() =>
-    expect(queryByLabelText(/loading/i)).not.toBeInTheDocument()
-  );
+  await waitFor(() => expect(queryByText(/loading/i)).not.toBeInTheDocument());
 
   expect(getByText(/available cars/i)).toBeVisible();
   expect(
@@ -43,36 +37,25 @@ test("renders error message if network error is happened", async () => {
       return res.networkError("Failed to connect");
     })
   );
-  const { getByLabelText, queryByLabelText, getByRole } = render(<Catalog />);
+  const { getByText, queryByText, getByRole } = render(<Catalog />);
 
-  expect(getByLabelText(/loading/i)).toBeVisible();
+  expect(getByText(/loading/i)).toBeVisible();
 
-  await waitFor(() =>
-    expect(queryByLabelText(/loading/i)).not.toBeInTheDocument()
-  );
+  await waitFor(() => expect(queryByText(/loading/i)).not.toBeInTheDocument());
 
   expect(getByRole("alert")).toBeVisible();
 });
 
 test("renders the second page if Next button is clicked", async () => {
-  const {
-    getByLabelText,
-    queryByLabelText,
-    getByText,
-    getAllByTestId
-  } = render(<Catalog />);
+  const { getByText, queryByText, getAllByTestId } = render(<Catalog />);
 
-  await waitFor(() =>
-    expect(queryByLabelText(/loading/i)).not.toBeInTheDocument()
-  );
+  await waitFor(() => expect(queryByText(/loading/i)).not.toBeInTheDocument());
 
   userEvent.click(getByText(/next/i));
 
-  expect(getByLabelText(/loading/i)).toBeVisible();
+  expect(getByText(/loading/i)).toBeVisible();
 
-  await waitFor(() =>
-    expect(queryByLabelText(/loading/i)).not.toBeInTheDocument()
-  );
+  await waitFor(() => expect(queryByText(/loading/i)).not.toBeInTheDocument());
 
   const { cars, totalCarsCount, totalPageCount } = testDataCatalogPage2;
 

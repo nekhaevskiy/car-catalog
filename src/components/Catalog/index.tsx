@@ -1,7 +1,7 @@
 import React from "react";
 import { carsUrl } from "../../api";
 import { Car, Card } from "../Card";
-import { Loading } from "../Loading";
+import { LoadingCard } from "../LoadingCard";
 import { Pagination } from "../Pagination";
 import styles from "./Catalog.module.css";
 
@@ -37,7 +37,19 @@ function Catalog({ ...rest }) {
 
   switch (state) {
     case "pending":
-      return <Loading {...rest} />;
+      const loadingCars = new Array(10).fill(undefined);
+      return (
+        <div {...rest}>
+          <h1 className={styles.heading}>Available cars</h1>
+          <p className={styles.status}>Loading</p>
+
+          {loadingCars.map((car, index) => (
+            <div className={styles.card} key={index}>
+              <LoadingCard data-testid="LoadingCard" />
+            </div>
+          ))}
+        </div>
+      );
     case "resolved":
       if (!data) {
         throw new Error(
