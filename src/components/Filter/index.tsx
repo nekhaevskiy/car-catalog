@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { api, apiUrl, Colors, Manufacturers } from "../../api";
-import styles from "./Filter.module.css";
+import styles from "./styles.module.css";
 
 const useStyles = makeStyles(() =>
   createStyles({

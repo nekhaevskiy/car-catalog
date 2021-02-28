@@ -1,4 +1,4 @@
-import styles from "./LoadingCard.module.css";
+import styles from "./styles.module.css";
 
 function LoadingCard({ ...rest }) {
   return (

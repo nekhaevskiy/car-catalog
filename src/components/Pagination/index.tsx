@@ -1,4 +1,4 @@
-import styles from "./Pagination.module.css";
+import styles from "./styles.module.css";
 
 interface Props {
   current: number;

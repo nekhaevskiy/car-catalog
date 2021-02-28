@@ -1,10 +1,13 @@
 import { render } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { CardsWrapper } from ".";
 import { testDataCarsPage1 } from "../../api/__testData__/cars";
 
 test('renders "pending" state', () => {
   const { getByText, getAllByTestId } = render(
-    <CardsWrapper state="pending" />
+    <MemoryRouter>
+      <CardsWrapper state="pending" />
+    </MemoryRouter>
   );
 
   expect(getByText(/available cars/i)).toBeVisible();
@@ -15,7 +18,9 @@ test('renders "pending" state', () => {
 test('renders "resolved" state', () => {
   const { cars, totalCarsCount } = testDataCarsPage1;
   const { getByText, getAllByTestId } = render(
-    <CardsWrapper state="resolved" catalog={testDataCarsPage1} />
+    <MemoryRouter>
+      <CardsWrapper state="resolved" catalog={testDataCarsPage1} />
+    </MemoryRouter>
   );
 
   expect(getByText(/available cars/i)).toBeVisible();
@@ -26,7 +31,11 @@ test('renders "resolved" state', () => {
 });
 
 test('renders "rejected" state', () => {
-  const { getByRole } = render(<CardsWrapper state="rejected" />);
+  const { getByRole } = render(
+    <MemoryRouter>
+      <CardsWrapper state="rejected" />
+    </MemoryRouter>
+  );
 
   expect(getByRole("alert")).toBeVisible();
 });

@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Car } from "../../api";
-import styles from "./Card.module.css";
+import styles from "./styles.module.css";
 
 interface Props {
   car: Car;
@@ -19,6 +20,7 @@ function Card({
   ...rest
 }: Props) {
   const carName = `${manufacturerName} ${modelName}`;
+  const carUrl = `/cars/${stockNumber}`;
   return (
     <article className={styles.card} {...rest}>
       <img
@@ -38,8 +40,7 @@ function Card({
           <li>{fuelType}</li>
           <li className={styles.color}>{color}</li>
         </ul>
-        {/* TODO: Make the URL unique */}
-        <a href="/car-61184">View details</a>
+        <Link to={carUrl}>View details</Link>
       </div>
     </article>
   );

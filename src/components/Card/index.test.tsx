@@ -1,6 +1,8 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { Car, Card } from ".";
+import { MemoryRouter } from "react-router-dom";
+import { Card } from ".";
+import { Car } from "../../api";
 
 const mockedCar: Car = {
   stockNumber: 10105,
@@ -16,7 +18,11 @@ const mockedCar: Car = {
 };
 
 test("renders Card", () => {
-  const { getByText, getByAltText } = render(<Card car={mockedCar} />);
+  const { getByText, getByAltText } = render(
+    <MemoryRouter>
+      <Card car={mockedCar} />
+    </MemoryRouter>
+  );
   const {
     stockNumber,
     manufacturerName,
@@ -36,5 +42,8 @@ test("renders Card", () => {
     getByText(`${mileage.number.toLocaleString("de-DE")} ${mileage.unit}`)
   ).toBeVisible();
   expect(getByText(fuelType)).toBeVisible();
-  expect(getByText(/view details/i)).toHaveAttribute("href", "/car-61184");
+  expect(getByText(/view details/i)).toHaveAttribute(
+    "href",
+    `/cars/${stockNumber}`
+  );
 });

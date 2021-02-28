@@ -2,7 +2,7 @@ import React from "react";
 import { Catalog } from "../../api";
 import { Card } from "../Card";
 import { LoadingCard } from "../LoadingCard";
-import styles from "./CardsWrapper.module.css";
+import styles from "./styles.module.css";
 
 type State = "pending" | "resolved" | "rejected";
 

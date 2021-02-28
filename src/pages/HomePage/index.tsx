@@ -3,9 +3,9 @@ import { api, apiUrl, Catalog } from "../../api";
 import { CardsWrapper, State } from "../../components/CardsWrapper";
 import { Filter, FilterState, initialFilter } from "../../components/Filter";
 import { Pagination } from "../../components/Pagination";
-import styles from "./Home.module.css";
+import styles from "./styles.module.css";
 
-function Home() {
+function HomePage() {
   const [state, setState] = React.useState<State>("pending");
   const [filter, setFilter] = React.useState<FilterState>(initialFilter);
   const [page, setPage] = React.useState(1);
@@ -70,4 +70,4 @@ function Home() {
   );
 }
 
-export { Home };
+export { HomePage };

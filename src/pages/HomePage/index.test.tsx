@@ -2,7 +2,8 @@ import { render, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import React from "react";
-import { Home } from ".";
+import { MemoryRouter } from "react-router-dom";
+import { HomePage } from ".";
 import { apiUrl } from "../../api";
 import {
   testDataAudiRed,
@@ -15,7 +16,11 @@ import { server } from "../../mocks/server";
 
 test("renders the first page of the catalog in the happy case", async () => {
   const { cars, totalCarsCount, totalPageCount } = testDataCarsPage1;
-  const { getByText, queryByText, getAllByTestId } = render(<Home />);
+  const { getByText, queryByText, getAllByTestId } = render(
+    <MemoryRouter>
+      <HomePage />
+    </MemoryRouter>
+  );
 
   expect(getByText(/loading.../i)).toBeVisible();
   expect(getByText(/filter/i)).toBeDisabled();
@@ -56,7 +61,7 @@ test("renders the first page of the catalog in the happy case", async () => {
   expect(within(firstCard).getByText(fuelType)).toBeVisible();
   expect(within(firstCard).getByText(/view details/i)).toHaveAttribute(
     "href",
-    "/car-61184"
+    `/cars/${stockNumber}`
   );
 
   expect(getAllByTestId("Card")).toHaveLength(cars.length);
@@ -83,7 +88,11 @@ test("renders the error alert in an error case", async () => {
       return res.networkError("Failed to connect");
     })
   );
-  const { getByTestId, getByText, queryByText, getByRole } = render(<Home />);
+  const { getByTestId, getByText, queryByText, getByRole } = render(
+    <MemoryRouter>
+      <HomePage />
+    </MemoryRouter>
+  );
 
   expect(getByTestId("Filter")).toBeVisible();
   expect(getByText(/loading.../i)).toBeVisible();
@@ -97,7 +106,11 @@ test("renders the error alert in an error case", async () => {
 
 test("renders the second page of the catalog if the Next button is clicked", async () => {
   const { cars, totalCarsCount, totalPageCount } = testDataCarsPage2;
-  const { getByText, queryByText, getAllByTestId } = render(<Home />);
+  const { getByText, queryByText, getAllByTestId } = render(
+    <MemoryRouter>
+      <HomePage />
+    </MemoryRouter>
+  );
 
   await waitFor(() => expect(getByText("Next")).toBeVisible());
 
@@ -140,7 +153,7 @@ test("renders the second page of the catalog if the Next button is clicked", asy
   expect(within(firstCard).getByText(fuelType)).toBeVisible();
   expect(within(firstCard).getByText(/view details/i)).toHaveAttribute(
     "href",
-    "/car-61184"
+    `/cars/${stockNumber}`
   );
 
   expect(getAllByTestId("Card")).toHaveLength(cars.length);
@@ -156,7 +169,11 @@ test("all cars with the first color and the first manufacturer can be rendered f
   const manufacturers = testDataManufacturers.manufacturers.map(
     (manufacturer) => manufacturer.name
   );
-  const { getByText, queryByText, getByTestId } = render(<Home />);
+  const { getByText, queryByText, getByTestId } = render(
+    <MemoryRouter>
+      <HomePage />
+    </MemoryRouter>
+  );
 
   await waitFor(() => expect(getByText("Next")).toBeVisible());
 
