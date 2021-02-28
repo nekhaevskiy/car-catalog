@@ -1,9 +1,6 @@
 import { rest } from "msw";
 import { carsUrl } from "../api";
-import {
-  testDataCatalogPage1,
-  testDataCatalogPage2
-} from "../__testData__/Catalog";
+import { testDataCatalogPage1, testDataCatalogPage2 } from "../testData";
 
 export const handlers = [
   rest.get(carsUrl, (req, res, ctx) => {

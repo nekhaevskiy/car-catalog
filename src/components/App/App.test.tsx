@@ -7,8 +7,8 @@ test("renders all necessary components", async () => {
 
   expect(getByTestId("Header")).toBeVisible();
   expect(getByTestId("Filter")).toBeVisible();
-  expect(getByTestId("Catalog")).toBeVisible();
+  expect(getByTestId("CardsWrapper")).toBeVisible();
   expect(getByTestId("Footer")).toBeVisible();
 
-  await waitFor(() => expect(getByTestId("Catalog")).toBeVisible());
+  await waitFor(() => expect(getByTestId("CardsWrapper")).toBeVisible());
 });

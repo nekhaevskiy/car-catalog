@@ -4,10 +4,7 @@ import { rest } from "msw";
 import { Catalog } from ".";
 import { carsUrl } from "../../api";
 import { server } from "../../mocks/server";
-import {
-  testDataCatalogPage1,
-  testDataCatalogPage2
-} from "../../__testData__/Catalog";
+import { testDataCatalogPage1, testDataCatalogPage2 } from "../../testData";
 
 test("renders the first page of the catalog", async () => {
   const { getByText, queryByText, getAllByTestId } = render(<Catalog />);

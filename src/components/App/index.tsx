@@ -1,5 +1,5 @@
 import React from "react";
-import { Catalog } from "../Catalog";
+import { Catalog as CardsWrapper } from "../CardsWrapper";
 import { Filter } from "../Filter";
 import { Footer } from "../Footer";
 import { Header } from "../Header";
@@ -14,7 +14,7 @@ function App() {
           <Filter onFilterChange={() => {}} data-testid="Filter" />
         </div>
         <div className={styles.right}>
-          <Catalog data-testid="Catalog" />
+          <CardsWrapper data-testid="CardsWrapper" />
         </div>
       </main>
       <Footer data-testid="Footer" />

@@ -3,9 +3,9 @@ import { carsUrl } from "../../api";
 import { Car, Card } from "../Card";
 import { LoadingCard } from "../LoadingCard";
 import { Pagination } from "../Pagination";
-import styles from "./Catalog.module.css";
+import styles from "./CardsWrapper.module.css";
 
-interface CatalogData {
+interface CardsWrapperData {
   cars: Car[];
   totalPageCount: number;
   totalCarsCount: number;
@@ -16,7 +16,7 @@ type State = "pending" | "resolved" | "rejected";
 function Catalog({ ...rest }) {
   const [state, setState] = React.useState<State>("pending");
   const [page, setPage] = React.useState(1);
-  const [data, setData] = React.useState<CatalogData>();
+  const [data, setData] = React.useState<CardsWrapperData>();
   React.useEffect(() => {
     window
       .fetch(`${carsUrl}?page=${page}`)
@@ -92,4 +92,4 @@ function Catalog({ ...rest }) {
 }
 
 export { Catalog };
-export type { CatalogData };
+export type { CardsWrapperData };

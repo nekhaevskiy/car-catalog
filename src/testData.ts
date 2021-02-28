@@ -1,6 +1,6 @@
-import { CatalogData } from "../components/Catalog";
+import { CardsWrapperData } from "./components/CardsWrapper";
 
-const testDataCatalogPage1: CatalogData = {
+const testDataCatalogPage1: CardsWrapperData = {
   cars: [
     {
       stockNumber: 10105,
@@ -97,7 +97,7 @@ const testDataCatalogPage1: CatalogData = {
   totalCarsCount: 11
 };
 
-const testDataCatalogPage2: CatalogData = {
+const testDataCatalogPage2: CardsWrapperData = {
   cars: [
     {
       stockNumber: 10157,
