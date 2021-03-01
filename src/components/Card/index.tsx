@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Car } from "../../api";
+import { CarItem } from "../../api";
 import styles from "./styles.module.css";
 
 interface Props {
-  car: Car;
+  car: CarItem;
 }
 
 function Card({

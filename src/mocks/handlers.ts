@@ -1,5 +1,6 @@
 import { rest } from "msw";
 import { apiUrl } from "../api";
+import { testDataCar } from "../api/__testData__/car";
 import {
   testDataAudiRed,
   testDataCarsPage1,
@@ -20,6 +21,13 @@ export const handlers = [
       return res(ctx.status(200), ctx.json(testDataCarsPage2));
     }
     return res(ctx.status(200), ctx.json(testDataCarsPage1));
+  }),
+
+  rest.get(`${apiUrl.cars}/:carId`, (req, res, ctx) => {
+    const { carId } = req.params;
+    const updatedTestData = { ...testDataCar };
+    updatedTestData.car.stockNumber = carId;
+    return res(ctx.status(200), ctx.json(updatedTestData));
   }),
 
   rest.get(apiUrl.colors, (req, res, ctx) => {

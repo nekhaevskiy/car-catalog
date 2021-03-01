@@ -30,7 +30,7 @@ function CardsWrapper({ state, catalog, ...rest }: Props) {
     case "resolved":
       if (!catalog) {
         throw new Error(
-          'catalog is undefined but state is "resolved" in the CardsWrapper component'
+          'catalog is undefined but state is "resolved" in CardsWrapper'
         );
       }
       const { cars, totalCarsCount } = catalog;
@@ -51,10 +51,8 @@ function CardsWrapper({ state, catalog, ...rest }: Props) {
     case "rejected":
       return (
         <div role="alert" {...rest}>
-          <h1>
-            Something very bad has happened. Please reload the page to try
-            again.
-          </h1>
+          <h1 className={styles.heading}>Something very bad has happened.</h1>
+          <p className={styles.status}>Please reload the page to try again.</p>
         </div>
       );
     default:

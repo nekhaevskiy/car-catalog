@@ -8,7 +8,7 @@ function api<T>(url: string): Promise<T> {
   return fetch(url).then((response) => response.json());
 }
 
-interface Car {
+interface CarItem {
   stockNumber: number;
   manufacturerName: string;
   modelName: string;
@@ -21,8 +21,12 @@ interface Car {
   pictureUrl: string;
 }
 
+interface Car {
+  car: CarItem;
+}
+
 interface Catalog {
-  cars: Car[];
+  cars: CarItem[];
   totalPageCount: number;
   totalCarsCount: number;
 }
@@ -45,4 +49,4 @@ interface Manufacturers {
 }
 
 export { apiUrl, api };
-export type { Car, Catalog, Colors, Manufacturers };
+export type { CarItem, Car, Catalog, Colors, Manufacturers };

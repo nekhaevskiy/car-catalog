@@ -1,11 +1,56 @@
-.loadingContainer {
+.imageWrapper {
+  display: block;
+  height: 260px;
+  background-color: var(--color-gray);
+}
+
+.imageWrapper img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 260px;
+  margin: 0 auto;
+}
+
+.container {
   max-width: 800px;
   margin: 0 auto;
-  padding: var(--space-medium);
+  padding: var(--space-large);
+  box-sizing: content-box;
 }
 
 .heading {
   font-size: var(--size-x-large);
   font-weight: bold;
   margin: 0 0 var(--space-large);
+}
+
+.specs {
+  display: block;
+  margin: 0 0 var(--space-large);
+  padding: 0;
+  font-size: var(--size-large);
+  list-style: none;
+}
+
+.specs li {
+  display: inline;
+}
+
+.specs li:not(:last-child)::after {
+  content: " - ";
+}
+
+.mileage {
+  text-transform: uppercase;
+}
+
+.color {
+  text-transform: capitalize;
+}
+
+.description {
+  margin: 0;
+  font-size: var(--size-medium);
 }
