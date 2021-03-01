@@ -2,9 +2,10 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { api, apiUrl, Car, CarItem } from "../../api";
 import { LoadingCard } from "../../components/LoadingCard";
+import { NotFound } from "../../components/NotFound";
 import styles from "./styles.module.css";
 
-type State = "pending" | "resolved" | "rejected by server" | "rejected";
+type State = "pending" | "resolved" | "not found" | "rejected";
 
 function CarPage() {
   let { carId } = useParams<{ carId: string }>();
@@ -17,8 +18,11 @@ function CarPage() {
         setState("resolved");
       })
       .catch((error) => {
-        setState("rejected");
-        // TODO: add state "rejected by server"
+        if (error.message === "Not Found") {
+          setState("not found");
+        } else {
+          setState("rejected");
+        }
       });
   }, [carId]);
 
@@ -73,6 +77,8 @@ function CarPage() {
           </div>
         </article>
       );
+    case "not found":
+      return <NotFound />;
     case "rejected":
       return (
         <div className={styles.container} role="alert">

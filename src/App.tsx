@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
+import { NotFound } from "./components/NotFound";
 import { CarPage } from "./pages/CarPage";
 import { HomePage } from "./pages/HomePage";
-import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
             <CarPage />
           </Route>
           <Route path="*">
-            <NotFoundPage />
+            <NotFound />
           </Route>
         </Switch>
       </main>

@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { NotFoundPage } from ".";
+import { NotFound } from ".";
 
 test("renders the page", () => {
   const { getByAltText, getByText, getAllByRole } = render(
     <MemoryRouter>
-      <NotFoundPage />
+      <NotFound />
     </MemoryRouter>
   );
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "./logo.png";
 import styles from "./styles.module.css";
 
-function NotFoundPage() {
+function NotFound() {
   return (
     <div className={styles.container}>
       <article>
@@ -22,4 +22,4 @@ function NotFoundPage() {
   );
 }
 
-export { NotFoundPage };
+export { NotFound };
