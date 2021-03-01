@@ -4,6 +4,7 @@
   align-items: center;
   min-height: inherit;
   text-align: center;
+  padding: var(--space-large);
 }
 
 .logo {

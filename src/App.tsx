@@ -33,7 +33,6 @@ function App() {
   );
 }
 
-// TODO: Add mobile version
 // TODO: Check in different browsers
 
 export default App;

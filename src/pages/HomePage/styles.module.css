@@ -2,7 +2,7 @@
   display: flex;
   max-width: 1024px;
   margin: 0 auto;
-  padding: var(--space-large) var(--space-small) 0 var(--space-small);
+  padding: var(--space-large) var(--space-medium) 0;
 }
 
 .left {
@@ -14,4 +14,15 @@
 
 .right {
   flex-grow: 1;
+}
+
+@media (max-width: 700px) {
+  .container {
+    display: block;
+    max-width: 425px;
+  }
+
+  .left {
+    margin: 0 auto var(--space-large);
+  }
 }
