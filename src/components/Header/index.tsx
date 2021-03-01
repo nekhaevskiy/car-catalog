@@ -8,18 +8,18 @@ function Header({ ...rest }) {
     <header className={styles.wrapper} {...rest}>
       <div className={styles.inner}>
         <Link to="/" className={styles.logo}>
-          <img src={logo} alt="Unnamed Company" width="100" height="37" />
+          <img src={logo} alt="Unnamed Company" width="180" height="37" />
         </Link>
         <nav>
           <ul className={styles.menu}>
             <li className={styles.menuItem}>
-              <a href="/purchase">Purchase</a>
+              <Link to="/purchase">Purchase</Link>
             </li>
             <li className={styles.menuItem}>
-              <a href="/my-orders">My Orders</a>
+              <Link to="/my-orders">My Orders</Link>
             </li>
             <li className={styles.menuItem}>
-              <a href="/sell">Sell</a>
+              <Link to="/sell">Sell</Link>
             </li>
           </ul>
         </nav>

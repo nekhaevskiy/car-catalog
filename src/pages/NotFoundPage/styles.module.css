@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: inherit;
+  text-align: center;
+}
+
+.logo {
+  display: block;
+  margin: 0 0 var(--space-large);
+}
+
+.logo img {
+  max-width: 180px;
+  width: 100%;
+  height: auto;
+}
+
+.heading {
+  font-size: var(--size-x-large);
+  font-weight: bold;
+  margin: 0 0 var(--space-large);
+}
+
+.text {
+  font-size: var(--size-large);
+  margin: 0 0 var(--space-large);
+}
+
+.text a {
+  font-size: var(--size-large);
+}

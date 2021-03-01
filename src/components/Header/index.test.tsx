@@ -4,12 +4,13 @@ import { MemoryRouter } from "react-router-dom";
 import { Header } from ".";
 
 test("renders logo and menu items", () => {
-  const { getByAltText, getByText } = render(
+  const { getAllByRole, getByAltText, getByText } = render(
     <MemoryRouter>
       <Header />
     </MemoryRouter>
   );
 
+  expect(getAllByRole("link")[0]).toHaveAttribute("href", "/");
   expect(getByAltText(/unnamed company/i)).toBeVisible();
   expect(getByText(/purchase/i)).toBeVisible();
   expect(getByText(/purchase/i)).toHaveAttribute("href", "/purchase");

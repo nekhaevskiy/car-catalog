@@ -9,5 +9,3 @@ test("renders static components", () => {
   expect(getByTestId("CardsWrapper")).toBeVisible();
   expect(getByTestId("Footer")).toBeVisible();
 });
-
-test.todo("click on the logo will redirect to the homepage");

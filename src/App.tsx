@@ -5,6 +5,7 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { CarPage } from "./pages/CarPage";
 import { HomePage } from "./pages/HomePage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           <Route path="/cars/:carId">
             <CarPage />
           </Route>
+          <Route path="*">
+            <NotFoundPage />
+          </Route>
         </Switch>
       </main>
       <Footer data-testid="Footer" />
@@ -25,7 +29,6 @@ function App() {
   );
 }
 
-// TODO: Add 404 page
 // TODO: Add mobile version
 // TODO: Add ErrorBoundary
 // TODO: Check in different browsers
