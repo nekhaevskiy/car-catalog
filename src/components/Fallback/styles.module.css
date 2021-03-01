@@ -1,0 +1,20 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-large);
+  box-sizing: content-box;
+}
+
+.heading {
+  font-size: var(--size-x-large);
+  font-weight: bold;
+  margin: 0 0 var(--space-large);
+}
+
+.subheading {
+  display: block;
+  margin: 0 0 var(--space-large);
+  padding: 0;
+  font-size: var(--size-large);
+  list-style: none;
+}

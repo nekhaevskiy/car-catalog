@@ -1,6 +1,8 @@
 import React from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
+import { Fallback } from "./components/Fallback";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { NotFound } from "./components/NotFound";
@@ -12,17 +14,19 @@ function App() {
     <BrowserRouter>
       <Header data-testid="Header" />
       <main className={styles.main}>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/cars/:carId">
-            <CarPage />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path="/cars/:carId">
+              <CarPage />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </ErrorBoundary>
       </main>
       <Footer data-testid="Footer" />
     </BrowserRouter>
@@ -30,7 +34,6 @@ function App() {
 }
 
 // TODO: Add mobile version
-// TODO: Add ErrorBoundary
 // TODO: Check in different browsers
 
 export default App;

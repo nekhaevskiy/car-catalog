@@ -1,6 +1,7 @@
 import React from "react";
 import { Catalog } from "../../api";
 import { Card } from "../Card";
+import { Fallback } from "../Fallback";
 import { LoadingCard } from "../LoadingCard";
 import styles from "./styles.module.css";
 
@@ -49,12 +50,7 @@ function CardsWrapper({ state, catalog, ...rest }: Props) {
         </div>
       );
     case "rejected":
-      return (
-        <div role="alert" {...rest}>
-          <h1 className={styles.heading}>Something very bad has happened.</h1>
-          <p className={styles.status}>Please reload the page to try again.</p>
-        </div>
-      );
+      return <Fallback />;
     default:
       throw new Error("Unhandled state in the Catalog component");
   }

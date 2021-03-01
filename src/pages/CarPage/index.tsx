@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { api, apiUrl, Car, CarItem } from "../../api";
+import { Fallback } from "../../components/Fallback";
 import { LoadingCard } from "../../components/LoadingCard";
 import { NotFound } from "../../components/NotFound";
 import styles from "./styles.module.css";
@@ -80,12 +81,7 @@ function CarPage() {
     case "not found":
       return <NotFound />;
     case "rejected":
-      return (
-        <div className={styles.container} role="alert">
-          <h1 className={styles.heading}>Something very bad has happened.</h1>
-          <p className={styles.specs}>Please reload the page to try again.</p>
-        </div>
-      );
+      return <Fallback />;
     default:
       throw new Error(`Unhandled state "${state}" in CarPage`);
   }
