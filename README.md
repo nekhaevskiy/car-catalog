@@ -1,5 +1,7 @@
 # Car Catalog
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c535288c-7f01-44a0-9730-584a687b9d34/deploy-status)](https://app.netlify.com/sites/car-catalog-nekhaevskiy/deploys)
+
 ## Available scripts
 
 To install dependencies:

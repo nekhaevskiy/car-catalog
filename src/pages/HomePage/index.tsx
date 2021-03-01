@@ -24,8 +24,6 @@ function HomePage() {
       })
       .catch((error) => {
         setState("rejected");
-        // TODO: log error without console
-        // console.error(error);
       });
   }, [filter.color, filter.manufacturer, page]);
 

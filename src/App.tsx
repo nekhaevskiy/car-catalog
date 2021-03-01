@@ -33,6 +33,4 @@ function App() {
   );
 }
 
-// TODO: Check in different browsers
-
 export default App;
