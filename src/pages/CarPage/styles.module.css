@@ -54,3 +54,44 @@
   margin: 0;
   font-size: var(--size-medium);
 }
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.detailsWrapper {
+  max-width: 65%;
+}
+
+.favorites {
+  max-width: 35%;
+  margin-left: var(--space-large);
+  border: 1px solid var(--color-gray);
+  padding: var(--space-large);
+}
+
+.favoritesText {
+  margin: 0 0 var(--space-small);
+}
+
+.favoritesButton {
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .columns {
+    display: block;
+  }
+
+  .detailsWrapper {
+    max-width: 100%;
+    margin-bottom: var(--space-large);
+  }
+
+  .favorites {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}

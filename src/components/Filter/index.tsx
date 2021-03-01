@@ -51,7 +51,9 @@ function Filter({ filter, onFilterChange, disabled, ...rest }: Props) {
       .then((data) => {
         setColors(data.colors);
       })
-      .catch(console.error);
+      .catch((error) => {
+        // TODO: update error handling
+      });
   }, []);
   React.useEffect(() => {
     api<Manufacturers>(apiUrl.manufacturers)
@@ -61,7 +63,9 @@ function Filter({ filter, onFilterChange, disabled, ...rest }: Props) {
         );
         setManufacturers(manufacturerNames);
       })
-      .catch(console.error);
+      .catch((error) => {
+        // TODO: update error handling
+      });
   }, []);
 
   const changeColor = (event: React.ChangeEvent<{ value: unknown }>) => {

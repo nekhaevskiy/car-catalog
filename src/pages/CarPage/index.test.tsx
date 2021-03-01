@@ -1,4 +1,5 @@
 import { render, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { useParams } from "react-router-dom";
 import { CarPage } from ".";
@@ -74,4 +75,29 @@ test("renders the error alert in an error case", async () => {
   });
 
   expect(getByRole("alert")).toBeVisible();
+});
+
+test("a car can be added to favorites and removed from them", async () => {
+  (useParams as jest.Mock).mockReturnValue({ carId: "123" });
+
+  const { queryByText, getByText } = render(<CarPage />);
+
+  await waitFor(() => {
+    expect(
+      queryByText(/loading car with stock # 123/i)
+    ).not.toBeInTheDocument();
+  });
+
+  expect(getByText(/if you like this car/i)).toBeVisible();
+  expect(getByText("Save")).toBeVisible();
+
+  userEvent.click(getByText("Save"));
+
+  expect(getByText(/if you don't like this car/i)).toBeVisible();
+  expect(getByText("Remove")).toBeVisible();
+
+  userEvent.click(getByText("Remove"));
+
+  expect(getByText(/if you like this car/i)).toBeVisible();
+  expect(getByText("Save")).toBeVisible();
 });
