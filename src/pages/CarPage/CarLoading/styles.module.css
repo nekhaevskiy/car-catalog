@@ -1,0 +1,18 @@
+.imageLoading {
+  display: block;
+  height: 260px;
+  background-color: var(--color-gray);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-large);
+  box-sizing: content-box;
+}
+
+.heading {
+  font-size: var(--size-x-large);
+  font-weight: bold;
+  margin: 0 0 var(--space-large);
+}

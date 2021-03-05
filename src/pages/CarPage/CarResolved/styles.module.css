@@ -65,19 +65,9 @@
   max-width: 65%;
 }
 
-.favorites {
+.favoritesWrapper {
   max-width: 35%;
   margin-left: var(--space-large);
-  border: 1px solid var(--color-gray);
-  padding: var(--space-large);
-}
-
-.favoritesText {
-  margin: 0 0 var(--space-small);
-}
-
-.favoritesButton {
-  text-align: right;
 }
 
 @media (max-width: 640px) {
@@ -90,7 +80,7 @@
     margin-bottom: var(--space-large);
   }
 
-  .favorites {
+  .favoritesWrapper {
     max-width: 300px;
     margin: 0 auto;
   }
