@@ -6,6 +6,5 @@ test("renders static components", () => {
 
   expect(getByTestId("Header")).toBeVisible();
   expect(getByTestId("Filter")).toBeVisible();
-  expect(getByTestId("CardsWrapper")).toBeVisible();
   expect(getByTestId("Footer")).toBeVisible();
 });

@@ -22,17 +22,21 @@ test("renders the first page of the catalog in the happy case", async () => {
     </MemoryRouter>
   );
 
+  expect(getByText(/available cars/i)).toBeVisible();
   expect(getByText(/loading.../i)).toBeVisible();
   expect(getByText(/filter/i)).toBeDisabled();
+  expect(getAllByTestId("LoadingCard")).toHaveLength(10);
 
   await waitFor(() =>
     expect(queryByText(/loading.../i)).not.toBeInTheDocument()
   );
 
   expect(getByText(/filter/i)).not.toBeDisabled();
+  expect(getByText(/available cars/i)).toBeVisible();
   expect(
     getByText(`Showing ${cars.length} of ${totalCarsCount} results`)
   ).toBeVisible();
+  expect(getAllByTestId("Card")).toHaveLength(10);
 
   const firstCard = getAllByTestId("Card")[0];
   const {
@@ -95,6 +99,7 @@ test("renders the error alert in an error case", async () => {
   );
 
   expect(getByTestId("Filter")).toBeVisible();
+  expect(getByText(/available cars/i)).toBeVisible();
   expect(getByText(/loading.../i)).toBeVisible();
 
   await waitFor(() =>
