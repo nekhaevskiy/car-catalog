@@ -1,50 +1,24 @@
 import React from "react";
-import { api, apiUrl, Catalog } from "../../api";
+import { apiUrl, Catalog } from "../../api";
 import { CardsWrapper } from "../../components/CardsWrapper";
 import { Fallback } from "../../components/Fallback";
 import { Filter, FilterState, initialFilter } from "../../components/Filter";
 import { HomeLoading } from "../../components/HomeLoading";
 import { Pagination } from "../../components/Pagination";
+import { State, useFetch } from "../../hooks/useFetch";
 import styles from "./styles.module.css";
-
-enum State {
-  Pending = "pending",
-  Resolved = "resolved",
-  Rejected = "rejected"
-}
-
-function useCatalogFetch(
-  filter: FilterState,
-  page: number
-): { state: State; catalog?: Catalog } {
-  const [state, setState] = React.useState<State>(State.Pending);
-  const [catalog, setCatalog] = React.useState<Catalog>();
-
-  React.useEffect(() => {
-    const { color, manufacturer } = filter;
-    const colorParam = color !== initialFilter.color ? `&color=${color}` : "";
-    const manufacturerParam =
-      manufacturer !== initialFilter.manufacturer
-        ? `&manufacturer=${manufacturer}`
-        : "";
-    setState(State.Pending);
-    api<Catalog>(`${apiUrl.cars}?page=${page}${colorParam}${manufacturerParam}`)
-      .then((catalog) => {
-        setState(State.Resolved);
-        setCatalog(catalog);
-      })
-      .catch((error) => {
-        setState(State.Rejected);
-      });
-  }, [filter, page]);
-
-  return { state, catalog };
-}
 
 function HomePage() {
   const [filter, setFilter] = React.useState<FilterState>(initialFilter);
   const [page, setPage] = React.useState(1);
-  const { state, catalog } = useCatalogFetch(filter, page);
+  const { color, manufacturer } = filter;
+  const colorParam = color !== initialFilter.color ? `&color=${color}` : "";
+  const manufacturerParam =
+    manufacturer !== initialFilter.manufacturer
+      ? `&manufacturer=${manufacturer}`
+      : "";
+  const url = `${apiUrl.cars}?page=${page}${colorParam}${manufacturerParam}`;
+  const { state, result: catalog } = useFetch<Catalog>(url);
 
   function onFilterChange(filter: FilterState) {
     setPage(1);

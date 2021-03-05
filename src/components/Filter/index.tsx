@@ -7,7 +7,8 @@ import {
   Select
 } from "@material-ui/core";
 import React from "react";
-import { api, apiUrl, Colors, Manufacturers } from "../../api";
+import { apiUrl, Colors, Manufacturers } from "../../api";
+import { State, useFetch } from "../../hooks/useFetch";
 import styles from "./styles.module.css";
 
 const useStyles = makeStyles(() =>
@@ -40,33 +41,17 @@ interface Props {
 
 function Filter({ filter, onFilterChange, disabled, ...rest }: Props) {
   const classes = useStyles();
-  const [colors, setColors] = React.useState<string[]>([]);
-  const [manufacturers, setManufacturers] = React.useState<string[]>([]);
   const [color, setColor] = React.useState(() => filter.color);
   const [manufacturer, setManufacturer] = React.useState(
     () => filter.manufacturer
   );
-  React.useEffect(() => {
-    api<Colors>(apiUrl.colors)
-      .then((data) => {
-        setColors(data.colors);
-      })
-      .catch((error) => {
-        // TODO: update error handling
-      });
-  }, []);
-  React.useEffect(() => {
-    api<Manufacturers>(apiUrl.manufacturers)
-      .then((data) => {
-        const manufacturerNames = data.manufacturers.map(
-          (manufacturer) => manufacturer.name
-        );
-        setManufacturers(manufacturerNames);
-      })
-      .catch((error) => {
-        // TODO: update error handling
-      });
-  }, []);
+  const { state: colorsState, result: colorsResult } = useFetch<Colors>(
+    apiUrl.colors
+  );
+  const {
+    state: manufacturersState,
+    result: manufacturersResult
+  } = useFetch<Manufacturers>(apiUrl.manufacturers);
 
   const changeColor = (event: React.ChangeEvent<{ value: unknown }>) => {
     setColor(event.target.value as string);
@@ -92,7 +77,7 @@ function Filter({ filter, onFilterChange, disabled, ...rest }: Props) {
       <FormControl
         variant="outlined"
         className={classes.formControl}
-        disabled={colors.length === 0}
+        disabled={colorsState !== State.Resolved}
       >
         <InputLabel id="select-color-label">Color</InputLabel>
         <Select
@@ -107,7 +92,7 @@ function Filter({ filter, onFilterChange, disabled, ...rest }: Props) {
           <MenuItem value={initialFilter.color}>
             <em>All car colors</em>
           </MenuItem>
-          {colors.map((color) => (
+          {colorsResult?.colors.map((color) => (
             <MenuItem value={color} key={color}>
               {color}
             </MenuItem>
@@ -118,7 +103,7 @@ function Filter({ filter, onFilterChange, disabled, ...rest }: Props) {
       <FormControl
         variant="outlined"
         className={classes.formControl}
-        disabled={manufacturers.length === 0}
+        disabled={manufacturersState !== State.Resolved}
       >
         <InputLabel id="select-manufacturer-label">Manufacturer</InputLabel>
         <Select
@@ -133,9 +118,9 @@ function Filter({ filter, onFilterChange, disabled, ...rest }: Props) {
           <MenuItem value={initialFilter.manufacturer}>
             <em>All manufacturers</em>
           </MenuItem>
-          {manufacturers.map((manufacturer) => (
-            <MenuItem value={manufacturer} key={manufacturer}>
-              {manufacturer}
+          {manufacturersResult?.manufacturers.map((manufacturer) => (
+            <MenuItem value={manufacturer.name} key={manufacturer.name}>
+              {manufacturer.name}
             </MenuItem>
           ))}
         </Select>

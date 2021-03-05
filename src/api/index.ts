@@ -4,15 +4,6 @@ const apiUrl = {
   manufacturers: "https://auto1-mock-server.herokuapp.com/api/manufacturers"
 };
 
-function api<T>(url: string): Promise<T> {
-  return fetch(url).then((response) => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
-  });
-}
-
 interface CarItem {
   stockNumber: number;
   manufacturerName: string;
@@ -53,5 +44,5 @@ interface Manufacturers {
   manufacturers: Manufacturer[];
 }
 
-export { apiUrl, api };
+export { apiUrl };
 export type { CarItem, Car, Catalog, Colors, Manufacturers };
