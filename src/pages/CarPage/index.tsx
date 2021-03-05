@@ -1,10 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { api, apiUrl, Car, CarItem } from "../../api";
+import { CarLoading } from "../../components/CarLoading";
+import { CarResolved } from "../../components/CarResolved";
 import { Fallback } from "../../components/Fallback";
 import { NotFound } from "../../components/NotFound";
-import { CarLoading } from "./CarLoading";
-import { CarResolved } from "./CarResolved";
 
 enum State {
   Pending = "pending",

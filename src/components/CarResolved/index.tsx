@@ -1,5 +1,5 @@
-import { CarItem } from "../../../api";
-import { Favorites } from "../../../components/Favorites";
+import { CarItem } from "../../api";
+import { Favorites } from "../Favorites";
 import styles from "./styles.module.css";
 
 interface Props {

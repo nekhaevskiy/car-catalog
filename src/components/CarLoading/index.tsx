@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingCard } from "../../../components/LoadingCard";
+import { LoadingCard } from "../LoadingCard";
 import styles from "./styles.module.css";
 
 interface Props {
