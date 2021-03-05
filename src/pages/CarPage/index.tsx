@@ -13,7 +13,7 @@ enum State {
   Rejected = "rejected"
 }
 
-function useCarFetch(carId: string): [State, CarItem | undefined] {
+function useCarFetch(carId: string): { state: State; car?: CarItem } {
   const [state, setState] = React.useState<State>(State.Pending);
   const [car, setCar] = React.useState<CarItem>();
   React.useEffect(() => {
@@ -30,28 +30,21 @@ function useCarFetch(carId: string): [State, CarItem | undefined] {
         }
       });
   }, [carId]);
-  return [state, car];
+  return { state, car };
 }
 
 function CarPage() {
   let { carId } = useParams<{ carId: string }>();
-  const [state, car] = useCarFetch(carId);
+  const { state, car } = useCarFetch(carId);
 
-  switch (state) {
-    case State.Pending:
-      return <CarLoading carId={carId} />;
-    case State.Resolved:
-      if (!car) {
-        throw new Error("car is undefined but state is resolved");
-      }
-      return <CarResolved car={car} />;
-    case State.NotFound:
-      return <NotFound />;
-    case State.Rejected:
-      return <Fallback />;
-    default:
-      throw new Error(`Unhandled state "${state}" in CarPage`);
-  }
+  return (
+    <>
+      {state === State.Pending && <CarLoading carId={carId} />}
+      {state === State.Resolved && car && <CarResolved car={car} />}
+      {state === State.NotFound && <NotFound />}
+      {state === State.Rejected && <Fallback />}
+    </>
+  );
 }
 
 export { CarPage };
